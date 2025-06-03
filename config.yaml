@@ -1,0 +1,41 @@
+# 시뮬레이션 기본 설정
+simulation:
+  duration: 24  # 시뮬레이션 기간 (시간)
+  time_step: 1  # 시간 간격 (분)
+  start_date: "2024-01-01"
+
+# 풍력 프로파일 설정
+wind_profile:
+  reference_height: 10  # 기준 고도 (미터)
+  reference_speed: 5.0  # 기준 풍속 (m/s)
+  power_law_exponent: 0.14  # 파워 법칙 지수
+  max_height: 1000  # 최대 고도 (미터)
+
+# 공기 밀도 설정
+air_density:
+  sea_level_density: 1.225  # 해수면 공기 밀도 (kg/m³)
+  temperature_lapse_rate: 0.0065  # 온도 감소율 (K/m)
+  sea_level_temperature: 288.15  # 해수면 온도 (K)
+
+# 지상 기반 터빈 설정
+ground_turbine:
+  hub_height: 80  # 허브 높이 (미터)
+  rotor_diameter: 90  # 로터 직경 (미터)
+  rated_power: 2000  # 정격 출력 (kW)
+  cut_in_speed: 3.5  # 컷인 풍속 (m/s)
+  cut_out_speed: 25  # 컷아웃 풍속 (m/s)
+
+# AWE 시스템 설정
+awe_system:
+  operating_height: 300  # 작동 고도 (미터)
+  tether_length: 350  # 테더 길이 (미터)
+  rated_power: 100  # 정격 출력 (kW)
+  min_wind_speed: 3.0  # 최소 작동 풍속 (m/s)
+  max_wind_speed: 20  # 최대 작동 풍속 (m/s)
+
+# 배터리 시스템 설정
+battery:
+  capacity: 1000  # 용량 (kWh)
+  max_charge_rate: 100  # 최대 충전률 (kW)
+  max_discharge_rate: 100  # 최대 방전률 (kW)
+  efficiency: 0.95  # 충방전 효율
