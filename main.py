@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from models.power_calc import PowerCalculator
 from models.wind_profile import WindProfile
 from models.air_density import AirDensity
@@ -87,6 +88,30 @@ def run_simulation():
     print("-" * 35)
     for t, g_p, a_p in zip(time_points, ground_power, awe_power):
         print(f"{t:6.1f} | {g_p:9.2f} | {a_p:7.2f}")
+
+    # 분당 전력 생산량 그래프
+    plt.figure(figsize=(12, 6))
+    plt.plot(time_points, ground_power, 'b-', label='Ground Wind Turbine', linewidth=2)
+    plt.plot(time_points, awe_power, 'r-', label='AWE System', linewidth=2)
+    
+    # 그래프 스타일 설정
+    plt.title('Hourly Power Output Comparison', fontsize=14, pad=15)
+    plt.xlabel('Time (minutes)', fontsize=12)
+    plt.ylabel('Power (kW)', fontsize=12)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=10)
+    
+    # y축 범위 설정 (0부터 시작)
+    plt.ylim(bottom=0)
+    
+    # 그래프 여백 조정
+    plt.tight_layout()
+    
+    # 그래프 저장
+    plt.savefig('power_production_comparison.png', dpi=300, bbox_inches='tight')
+    
+    # 그래프 표시
+    plt.show()
 
 if __name__ == "__main__":
     run_simulation()
