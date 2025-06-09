@@ -60,6 +60,10 @@ def run_simulation():
     ground_energy = np.sum(ground_power * time_step / 60)  # 분 -> 시간 변환
     awe_energy = np.sum(awe_power * time_step / 60)  # 분 -> 시간 변환
     
+    # 누적 에너지 배열 계산
+    ground_cumulative_energy = np.cumsum(ground_power * time_step / 60)
+    awe_cumulative_energy = np.cumsum(awe_power * time_step / 60)
+    
     # 결과 출력
     print("\n풍력 발전 시스템 시뮬레이션 결과:")
     print(f"시뮬레이션 기간: {duration}분")
@@ -110,7 +114,45 @@ def run_simulation():
     # 그래프 저장
     plt.savefig('power_production_comparison.png', dpi=300, bbox_inches='tight')
     
-    # 그래프 표시
+    # 누적 에너지 생산량 그래프
+    plt.figure(figsize=(12, 6))
+    plt.plot(time_points, ground_cumulative_energy, 'b-', label='Ground Wind Turbine', linewidth=2)
+    plt.plot(time_points, awe_cumulative_energy, 'r-', label='AWE System', linewidth=2)
+    
+    # 그래프 스타일 설정
+    plt.title('Cumulative Energy Production', fontsize=14, pad=15)
+    plt.xlabel('Time (minutes)', fontsize=12)
+    plt.ylabel('Cumulative Energy (kWh)', fontsize=12)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=10)
+    
+    # y축 범위 설정 (0부터 시작)
+    plt.ylim(bottom=0)
+    
+    # 마지막 지점에 실제 값 표시
+    final_ground_energy = ground_cumulative_energy[-1]
+    final_awe_energy = awe_cumulative_energy[-1]
+    
+    # 박스 스타일 설정
+    box_style = dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='gray')
+    
+    # 지상형 터빈 값 표시
+    plt.text(duration-0.5, final_ground_energy, 
+             f'Ground: {final_ground_energy:.2f} kWh',
+             bbox=box_style, ha='right', va='bottom')
+    
+    # AWE 시스템 값 표시
+    plt.text(duration-0.5, final_awe_energy,
+             f'AWE: {final_awe_energy:.2f} kWh',
+             bbox=box_style, ha='right', va='top')
+    
+    # 그래프 여백 조정
+    plt.tight_layout()
+    
+    # 그래프 저장
+    plt.savefig('cumulative_energy_comparison.png', dpi=300, bbox_inches='tight')
+    
+    # 모든 그래프 표시
     plt.show()
 
 if __name__ == "__main__":
